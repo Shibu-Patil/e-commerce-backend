@@ -34,13 +34,22 @@ exports.addProduct = async (req, res) => {
 // @access  Public
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 });
-    res.status(200).json(products);
+    const products = await Product.find().sort({ createdAt: -1 }).lean(); // returns plain JS objects
+
+    const modifiedProduct = products.map((val) => {
+      return {
+        ...val,
+        image: `http://localhost:5000/uploads/${val.image}`
+      };
+    });
+
+    res.status(200).json(modifiedProduct);
   } catch (err) {
     console.error('Error fetching products:', err.message);
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 // @desc    Get single product by ID
 // @route   GET /api/products/:id

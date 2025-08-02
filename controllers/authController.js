@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const { log } = require('console');
 
 const JWT_SECRET = 'your_jwt_secret_key'; // Use .env in production
 
@@ -57,6 +58,8 @@ exports.register = async (req, res) => {
 
 // Login Controller
 exports.login = async (req, res) => {
+  console.log(req);
+  
   try {
     const { email, password } = req.body;
 
