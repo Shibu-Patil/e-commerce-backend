@@ -1,13 +1,10 @@
 const Product = require('../models/Product');
 
-// @desc    Add a new product
-// @route   POST /api/products/add
-// @access  Private (should be protected in future)
 exports.addProduct = async (req, res) => {
   try {
     const { title, description, price, category, stock } = req.body;
 
-    // Ensure image was uploaded
+   
     if (!req.file) {
       return res.status(400).json({ message: 'Image is required' });
     }
@@ -18,7 +15,7 @@ exports.addProduct = async (req, res) => {
       price,
       category,
       stock,
-      image: req.file.filename, // multer saves file
+      image: req.file.filename, 
     });
 
     await product.save();
@@ -29,9 +26,7 @@ exports.addProduct = async (req, res) => {
   }
 };
 
-// @desc    Get all products
-// @route   GET /api/products/all
-// @access  Public
+
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
@@ -42,9 +37,7 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
-// @desc    Get single product by ID
-// @route   GET /api/products/:id
-// @access  Public
+
 exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);

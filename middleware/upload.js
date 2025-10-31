@@ -2,7 +2,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// ensure uploads folder exists
+
 const uploadPath = path.join(__dirname, '../uploads');
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath);
@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
     cb(null, uploadPath);
   },
   filename: function (req, file, cb) {
-    // temp name; will rename after saving user to get _id
+   
     const ext = path.extname(file.originalname);
     const tempName = 'temp_' + Date.now() + ext;
     cb(null, tempName);
